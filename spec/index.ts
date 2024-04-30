@@ -3,6 +3,7 @@ import find from 'find';
 import Jasmine from 'jasmine';
 import { parse } from 'ts-command-line-args';
 import logger from 'jet-logger';
+import server from '../src/server';
 
 
 // **** Types **** //
@@ -75,3 +76,6 @@ if (args.testFile) {
     }
   }
 })();
+
+// Export app for testing
+export { server };
