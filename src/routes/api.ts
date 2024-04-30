@@ -10,7 +10,7 @@ import { IRes } from './types/express/misc';
 const apiRouter = Router();
 
 // Add UserRouter
-apiRouter.get("/", (req: IReq, res: IRes) => {
+apiRouter.get('/', (req: IReq, res: IRes) => {
   res.send( '<h1>Soft-GroupRD-F1UDP</h1>' );
 });
 
