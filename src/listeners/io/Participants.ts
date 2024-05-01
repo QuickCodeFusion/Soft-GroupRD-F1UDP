@@ -26,12 +26,12 @@ export const ParticipantsListener = (
       }),
     };
     io.emit('Participants', normalizedData);
+    if (EnvVars.NodeEnv === NodeEnvs.Dev.valueOf()) {
+      // eslint-disable-next-line no-console
+      console.log('Participants', normalizedData);
+    }
   }
   else {
     throw new Error('Invalid data: ' + data);
-  }
-  if (EnvVars.NodeEnv === NodeEnvs.Dev.valueOf()) {
-    // eslint-disable-next-line no-console
-    console.log('Participants', data);
   }
 };
