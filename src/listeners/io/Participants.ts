@@ -1,11 +1,11 @@
 import EnvVars from '@src/constants/EnvVars';
 import { NodeEnvs } from '@src/constants/misc';
 import { PacketParticipantsData, ParticipantData } from 'f1-23-udp';
-import { Socket } from 'socket.io';
+import { Server } from 'socket.io';
 import { NormalizedParticipantData, NormalizedParticipantsData } from './types/F123UDP';
 
 export const ParticipantsListener = (
-  io: Socket,
+  io: Server,
   data: PacketParticipantsData | undefined) => {
   if (data) {
     const normalizedData: NormalizedParticipantsData = {

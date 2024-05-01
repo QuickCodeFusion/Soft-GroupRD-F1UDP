@@ -6,6 +6,7 @@ import server from './server';
 import { Server, Socket } from 'socket.io';
 import http from 'http';
 import { F123UDP } from 'f1-23-udp';
+import { ParticipantsListener } from './listeners/io/Participants';
 
 
 // **** Run **** //
@@ -43,7 +44,7 @@ f123Client.on('lapData', () => { console.log('ENTRE');});
 
 f123Client.on('carStatus', () => { console.log('ENTRE');});
 
-f123Client.on('participants', () => { console.log('ENTRE');});
+f123Client.on('participants', (data) => ParticipantsListener(io, data));
 
 f123Client.on('session', () => { console.log('ENTRE');});
 
