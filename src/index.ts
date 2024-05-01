@@ -7,6 +7,7 @@ import { Server, Socket } from 'socket.io';
 import http from 'http';
 import { F123UDP } from 'f1-23-udp';
 import { ParticipantsListener } from './listeners/io/Participants';
+import jsonParser from 'socket.io-json-parser';
 
 
 // **** Run **** //
@@ -23,6 +24,8 @@ export const io = new Server(http.createServer(server), {
   cors: {
     origin: '*',
   },
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+  parser: jsonParser,
 });
 
 /* eslint-disable no-console */
