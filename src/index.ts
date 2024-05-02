@@ -8,6 +8,7 @@ import http from 'http';
 import { F123UDP } from 'f1-23-udp';
 import { ParticipantsListener } from './listeners/io/Participants';
 import jsonParser from 'socket.io-json-parser';
+import { lapDataListener } from './listeners/f123Client/lapData';
 
 
 // **** Run **** //
@@ -43,7 +44,7 @@ io.on('disconnect', (socket: Socket) => {
 });
 
 
-f123Client.on('lapData', () => { console.log('ENTRE');});
+f123Client.on('lapData', (data) => lapDataListener(io, data));
 
 f123Client.on('carStatus', () => { console.log('ENTRE');});
 
