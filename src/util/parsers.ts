@@ -1,5 +1,5 @@
-import { NormalizedLapData } from '@src/listeners/f123Client/types/F123Client';
-import { PacketLapData } from 'f1-23-udp';
+import { NormalizedFinalClassificationData, NormalizedLapData } from '@src/listeners/f123Client/types/F123Client';
+import { PacketFinalClassificationData, PacketLapData } from 'f1-23-udp';
 
 export function parseLapStatusPacketFunc(packet: PacketLapData): NormalizedLapData[] {
 
@@ -21,5 +21,29 @@ export function parseLapStatusPacketFunc(packet: PacketLapData): NormalizedLapDa
   });
 
   return normalizedLapData;
+
+}
+
+export function parseFinalClassificationDataFunc(packet: PacketFinalClassificationData):
+ NormalizedFinalClassificationData[] {
+
+  const NormalizedFinalClassificationData = packet.m_classificationData.map(
+    (classificationData) => {
+      return {
+        'bestLapTimeInMS': classificationData.m_bestLapTimeInMS,
+        'gridPosition': classificationData.m_gridPosition,
+        'numLaps': classificationData.m_numLaps,
+        'points': classificationData.m_points,
+        'position': classificationData.m_position,
+        'resultStatus': classificationData.m_resultStatus,
+        'totalRaceTime': classificationData.m_totalRaceTime,
+        'penaltiesTime': classificationData.m_penaltiesTime,
+        'numPenalties': classificationData.m_numPenalties,
+        'numPitStops': classificationData.m_numPitStops,
+      } as NormalizedFinalClassificationData;
+    },
+  );
+
+  return NormalizedFinalClassificationData;
 
 }

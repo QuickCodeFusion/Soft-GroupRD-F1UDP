@@ -9,6 +9,7 @@ import { F123UDP } from 'f1-23-udp';
 import { ParticipantsListener } from './listeners/io/Participants';
 import jsonParser from 'socket.io-json-parser';
 import { lapDataListener } from './listeners/f123Client/lapData';
+import { finalClassificationListener } from './listeners/f123Client/finalClassification';
 
 
 // **** Run **** //
@@ -58,7 +59,7 @@ f123Client.on('carDamage', () => { console.log('ENTRE');});
 
 f123Client.on('lobbyInfo', () => { console.log('ENTRE');});
 
-f123Client.on('finalClassification', () => { console.log('ENTRE');});
+f123Client.on('finalClassification', (data) => { finalClassificationListener(io, data);});
 
 f123Client.on('event', () => { console.log('ENTRE');});
 
