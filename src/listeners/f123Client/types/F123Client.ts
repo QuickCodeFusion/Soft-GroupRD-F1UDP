@@ -10,14 +10,32 @@ export type NormalizedLapData = {
     lastLapTimeInMS: number;
     currentLapTimeInMS: number;
     sector1TimeInMS: number;
+    sector1TimeMinutes: number;
     sector2TimeInMS: number;
+    sector2TimeMinutes: number;
+    deltaToCarInFrontInMS: number;
+    deltaToRaceLeaderInMS: number;
     lapDistance: number;
+    totalDistance: number;
+    safetyCarDelta: number;
     carPosition: number;
     currentLapNum: number;
+    pitStatus: number;
     numPitStops: number;
     sector: number;
+    currentLapInvalid: number;
     penalties: number;
     totalWarnings: number;
+    driverStatus: number;
+    resultStatus: number;
+    gridPosition: number;
+    pitStopShouldServePen: number;
+    pitStopTimerInMS: number;
+    pitLaneTimeInLaneInMS: number;
+    pitLaneTimerActive: number;
+    numUnservedStopGoPens: number;
+    numUnservedDriveThroughPens: number;
+    cornerCuttingWarnings: number;
 }
 
 export type NormalizedFinalClassificationDataPacket = {

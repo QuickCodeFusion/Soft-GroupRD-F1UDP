@@ -1,4 +1,7 @@
-import { NormalizedFinalClassificationData, NormalizedLapData } from '@src/listeners/f123Client/types/F123Client';
+import { 
+  NormalizedFinalClassificationData, 
+  NormalizedLapData }
+  from '@src/listeners/f123Client/types/F123Client';
 import { PacketFinalClassificationData, PacketLapData } from 'f1-23-udp';
 
 export function parseLapStatusPacketFunc(packet: PacketLapData): NormalizedLapData[] {
@@ -9,14 +12,32 @@ export function parseLapStatusPacketFunc(packet: PacketLapData): NormalizedLapDa
       'carPosition': lapData.m_carPosition,
       'currentLapNum': lapData.m_currentLapNum,
       'currentLapTimeInMS': lapData.m_currentLapTimeInMS,
+      'currentLapInvalid': lapData.m_currentLapInvalid,
       'lastLapTimeInMS': lapData.m_lastLapTimeInMS,
       'lapDistance': lapData.m_lapDistance,
+      'totalDistance': lapData.m_totalDistance,
       'numPitStops': lapData.m_numPitStops,
       'penalties': lapData.m_penalties,
       'sector': lapData.m_sector,
       'sector1TimeInMS': lapData.m_sector1TimeInMS,
+      'sector1TimeMinutes': lapData.m_sector1TimeMinutes,
       'sector2TimeInMS': lapData.m_sector2TimeInMS,
+      'sector2TimeMinutes': lapData.m_sector2TimeMinutes,
+      'pitStatus': lapData.m_pitStatus,
+      'pitStopTimerInMS': lapData.m_pitStopTimerInMS,
+      'pitStopShouldServePen': lapData.m_pitStopShouldServePen,
+      'safetyCarDelta': lapData.m_safetyCarDelta,
+      'pitLaneTimerActive': lapData.m_pitLaneTimerActive,
+      'numUnservedDriveThroughPens': lapData.m_numUnservedDriveThroughPens,
+      'pitLaneTimeInLaneInMS': lapData.m_pitLaneTimeInLaneInMS,
+      'numUnservedStopGoPens': lapData.m_numUnservedStopGoPens,
       'totalWarnings': lapData.m_totalWarnings,
+      'cornerCuttingWarnings': lapData.m_cornerCuttingWarnings,
+      'driverStatus': lapData.m_driverStatus,
+      'resultStatus': lapData.m_resultStatus,
+      'deltaToCarInFrontInMS': lapData.m_deltaToCarInFrontInMS,
+      'deltaToRaceLeaderInMS': lapData.m_deltaToRaceLeaderInMS,
+      'gridPosition': lapData.m_gridPosition,
     } as NormalizedLapData;
   });
 
