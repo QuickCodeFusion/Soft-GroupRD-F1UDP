@@ -17,7 +17,6 @@ export type NormalizedParticipantData = {
 }
 
 export type NormalizedParticipantsData = {
-    header: PacketParticipantsData['m_header']
     numParticipants: PacketParticipantsData['m_numActiveCars']
     participants: NormalizedParticipantData[]
 }

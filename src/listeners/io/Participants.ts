@@ -9,7 +9,6 @@ export const ParticipantsListener = (
   data: PacketParticipantsData | undefined) => {
   if (data) {
     const normalizedData: NormalizedParticipantsData = {
-      header: data.m_header,
       numParticipants: data.m_numActiveCars,
       participants: data.m_participants.map((participant: ParticipantData) => {
         return {
