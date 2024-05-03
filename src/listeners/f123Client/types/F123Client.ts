@@ -1,4 +1,4 @@
-import { type PacketLapData } from 'f1-23-udp';
+import { PacketFinalClassificationData, type PacketLapData } from 'f1-23-udp';
 
 export type NormalizedLapDataPacket = {
     lapData: NormalizedLapData[];
@@ -18,4 +18,22 @@ export type NormalizedLapData = {
     sector: number;
     penalties: number;
     totalWarnings: number;
+}
+
+export type NormalizedFinalClassificationDataPacket = {
+    finalClassificationData: NormalizedFinalClassificationData[];
+    m_numCars: PacketFinalClassificationData['m_numCars'];
+}
+
+export type NormalizedFinalClassificationData = {
+    position: number;
+    numLaps: number;
+    gridPosition: number;
+    points: number;
+    numPitStops: number;
+    resultStatus: number;
+    bestLapTimeInMS: number;
+    totalRaceTime: number;
+    penaltiesTime: number;
+    numPenalties: number;
 }
