@@ -1,12 +1,5 @@
-import { F123UDP, PacketLapData, ParticipantData } from "f1-23-udp";
+import { PacketLapData, PacketParticipantsData } from "f1-23-udp";
 
-// Define the interfaces for packet structures
-
-interface PacketParticipantsData {
-    m_participants: ParticipantData[];
-}
-
-// Define the function to relate lap data to drivers
 export function relateLapDataToDriver(lapDataPacket: PacketLapData, participantsPacket: PacketParticipantsData): void {
     const driverData: { [driverId: number]: string } = {};
 
@@ -28,7 +21,6 @@ export function relateLapDataToDriver(lapDataPacket: PacketLapData, participants
             const driverName = driverData[driverId];
 
             if (driverName) {
-                // Now you can do whatever you want with the driver name and corresponding lap data
                 console.log(`Driver: ${driverId}, Lap Position: ${index + 1}`);
             }
         }
