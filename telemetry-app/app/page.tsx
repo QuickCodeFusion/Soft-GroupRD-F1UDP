@@ -19,9 +19,7 @@ const RaceDriversTable: React.FC = () => {
   const [drivers, setDrivers] = useState<Driver[]>([]);
 
   useEffect(() => {
-    const socket = io('ws://localhost:3000', {
-      
-    });
+    const socket = io('http://localhost:3000');
 
     socket.on('connect', () => {
       console.log('Connected to Socket.IO server');
