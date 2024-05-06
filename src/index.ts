@@ -10,6 +10,7 @@ import { ParticipantsListener } from './listeners/io/Participants';
 import jsonParser from 'socket.io-json-parser';
 import { lapDataListener } from './listeners/f123Client/lapData';
 import { finalClassificationListener } from './listeners/f123Client/finalClassification';
+import { relateLapDataToDriver } from './util/raceData';
 
 
 // **** Run **** //
@@ -44,24 +45,14 @@ io.on('disconnect', (socket: Socket) => {
   console.log('❌ Client disconnected: ', socket.id);
 });
 
-
-f123Client.on('lapData', (data) => lapDataListener(io, data));
-
-f123Client.on('carStatus', () => { console.log('ENTRE');});
-
-f123Client.on('participants', (data) => ParticipantsListener(io, data));
-
-f123Client.on('session', () => { console.log('ENTRE');});
-
-f123Client.on('carTelemetry', () => { console.log('ENTRE');});
-
-f123Client.on('carDamage', () => { console.log('ENTRE');});
-
-f123Client.on('lobbyInfo', () => { console.log('ENTRE');});
+f123Client.on('lapData', (lapData) => {
+  f123Client.on('participants', (participants) => {
+    const participantsPosition = relateLapDataToDriver(lapData, participants);
+    io.emit('participantsPosition', participantsPosition);
+  });
+});
 
 f123Client.on('finalClassification', (data) => { finalClassificationListener(io, data);});
-
-f123Client.on('event', () => { console.log('ENTRE');});
 
 f123Client.start();
 
