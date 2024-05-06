@@ -2,7 +2,7 @@ import './pre-start'; // Must be the first import
 import logger from 'jet-logger';
 
 import EnvVars from '@src/constants/EnvVars';
-import server from './server';
+import app from './server';
 import { Server, Socket } from 'socket.io';
 import http from 'http';
 import { F123UDP } from 'f1-23-udp';
@@ -18,21 +18,22 @@ import { relateLapDataToDriver } from './util/raceData';
 const SERVER_START_MSG = ('Express server started on port: ' + 
   EnvVars.Port.toString());
 
+const server = http.createServer(app);
+
 export const f123Client = new F123UDP({
   port: 20777,
   address: 'localhost',
 });
 
-export const io = new Server(http.createServer(server), {
+export const io = new Server(server, {
   cors: {
-    origin: '*',
+    origin: ['http://localhost:3000', 'http://127.0.0.1:3000', 'http://localhost:3001', 'http://127.0.0.1:3001'],
   },
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-  parser: jsonParser,
 });
 
 /* eslint-disable no-console */
 io.on('connection', (socket: Socket) => {
+  console.log('✅ Client connected: ', socket.id);
   socket.on('EventProject', () => { console.log('ENTRE');});
   socket.on('Participants', () => { console.log('ENTRE');});
   socket.on('SendPosition', () => { console.log('ENTRE');});
