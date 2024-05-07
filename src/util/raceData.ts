@@ -16,9 +16,11 @@ const relateLapDataToDriver = (
   participantsPacket.m_participants.forEach(participant => {
     if(participant.m_aiControlled === 1) return;
     const driverId = participant.m_networkId;
+    console.log('Driver ID:', driverId);
+    
     const driverName = participant.m_showOnlineNames ? 
       participant.m_name 
-      : `Jugador ${participant.m_networkId}`;
+      : `Jugador ${driverId !== 255 ? driverId : 'IA'}`;
     driversDictionary[driverId] = driverName;
   });
 
@@ -29,11 +31,10 @@ const relateLapDataToDriver = (
     if (carPosition > 0 && carPosition <= participantsPacket.m_participants.length) {
       const driver = participantsPacket.m_participants[carPosition - 1];
             
-      const driverName = driversDictionary[driver.m_driverId];
+      const driverName = driversDictionary[driver.m_networkId];
 
       if (driverName) {
         // eslint-disable-next-line no-console
-        console.log(`Driver: ${driver.m_driverId}, Lap Position: ${carPosition}`);
         driversData.push({
           name: driverName,
           aiControlled: driver.m_aiControlled,
