@@ -24,19 +24,24 @@ const RaceDriversTable: React.FC = () => {
     socket.on('connect', () => {
       console.log('Connected to Socket.IO server');
     });
-
+    
     socket.on('disconnect', () => {
       console.log('Disconnected from Socket.IO server');
     });
-
+    
     socket.on('participantsPosition', (data: Driver[]) => {
-      setDrivers(data);
+      if(data.length > 0) {
+        console.log(data);
+        setDrivers(data);
+      }
     });
 
     return () => {
       socket.disconnect();
     };
   }, []);
+
+  
 
   return (
     <div>
@@ -51,7 +56,7 @@ const RaceDriversTable: React.FC = () => {
           </tr>
         </thead>
         <tbody>
-          {drivers.map((driver, index) => (
+          {drivers?.sort((a, b) => a.position - b.position).map((driver, index) => (
             <tr key={index}>
               <td>{driver.name}</td>
               <td>{driver.raceNumber}</td>
