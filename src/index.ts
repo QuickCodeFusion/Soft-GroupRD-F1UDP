@@ -2,15 +2,9 @@ import './pre-start'; // Must be the first import
 import logger from 'jet-logger';
 
 import EnvVars from '@src/constants/EnvVars';
-import app, { f123Client } from './server';
+import app from './server';
 import { Server, Socket } from 'socket.io';
 import http from 'http';
-import { F123UDP } from 'f1-23-udp';
-import { ParticipantsListener } from './listeners/io/Participants';
-import jsonParser from 'socket.io-json-parser';
-import { lapDataListener } from './listeners/f123Client/lapData';
-import { finalClassificationListener } from './listeners/f123Client/finalClassification';
-import { relateLapDataToDriver } from './util/raceData';
 
 
 // **** Run **** //
@@ -41,17 +35,5 @@ io.on('disconnect', (socket: Socket) => {
   // eslint-disable-next-line no-console
   console.log('❌ Client disconnected: ', socket.id);
 });
-
-if (f123Client !== null) {
-  f123Client.on('lapData', (lapData) => {
-    f123Client?.on('participants', (participants) => {
-      const participantsPosition = relateLapDataToDriver(lapData, participants);
-      io.emit('participantsPosition', participantsPosition);
-    });
-  });
-
-  f123Client.on('finalClassification', (data) => {finalClassificationListener(io, data)});
-}
-
 
 server.listen(EnvVars.Port, () => logger.info(SERVER_START_MSG));
