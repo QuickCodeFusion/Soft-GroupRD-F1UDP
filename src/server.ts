@@ -18,6 +18,7 @@ import HttpStatusCodes from '@src/constants/HttpStatusCodes';
 
 import { NodeEnvs } from '@src/constants/misc';
 import { RouteError } from '@src/other/classes';
+import { F123UDP } from 'f1-23-udp';
 
 
 // **** Variables **** //
@@ -67,6 +68,22 @@ app.use((
 // Nav to /api by default
 app.get('/', (_: Request, res: Response) => {
   return res.redirect('/api');
+});
+
+export let f123Client: F123UDP | null = null;
+
+app.post(Paths.Settings.Port, (req: Request, res: Response) => {
+  const port: number = parseInt(req.query.port as string) || 20777;
+  function startf123Client(port: number) {
+    f123Client = new F123UDP({
+      port: port || 20777,
+    });
+    f123Client.start();
+  }
+
+  startf123Client(port);
+
+  return res.status(HttpStatusCodes.OK).json('Servidor iniciado en el puerto ' + port);
 });
 
 // **** Export default **** //
