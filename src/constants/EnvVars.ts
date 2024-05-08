@@ -8,4 +8,5 @@
 export default {
   NodeEnv: (process.env.NODE_ENV ?? ''),
   Port: (process.env.PORT ?? 0),
+  Origins: (process.env.ORIGINS ?? [] as string[]),
 } as const;
