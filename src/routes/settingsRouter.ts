@@ -8,6 +8,8 @@ import {
 } from '@src/listeners/f123Client/finalClassification';
 
 export let f123Client: F123UDP | null = null;
+let port: number = 20777,
+  address: string = '192.168.1.81';
 
 function appendListeners() {
   if (f123Client !== null) {
@@ -24,13 +26,19 @@ function appendListeners() {
   }
 }
 
-export const changePortAndAddress = (port: number, address: string) => {
-  function startClient(port: number, address: string) {
-    f123Client = new F123UDP({
-      port: port || 20777,
-      address: address || '192.168.1.81',
-    });
-    f123Client.start();
+function startClient(port?: number, address?: string) {
+  f123Client = new F123UDP({
+    port: port || 20777,
+    address: address || '192.168.1.81',
+  });
+  f123Client.start();
+}
+export const changePortAndAddress = (newPort?: number, newAddress?: string) => {
+  if (newPort !== undefined) {
+    port = newPort;
+  }
+  if (newAddress !== undefined) {
+    address = newAddress;
   }
   if (f123Client !== null) {
     f123Client.stop();
@@ -49,11 +57,13 @@ export const restartClient = () => {
     f123Client.stop();
     f123Client = null;
   }
+  startClient();
+  appendListeners();
 };
 
 export const getDetails = () => {
   return {
-    port: f123Client?.port,
-    address: f123Client?.address,
+    port,
+    address,
   };
 };
