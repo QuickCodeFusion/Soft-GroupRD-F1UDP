@@ -4,7 +4,7 @@ import Paths from '../constants/Paths';
 import { IReq } from './types/types';
 import { IRes } from './types/express/misc';
 import HttpStatusCodes from '@src/constants/HttpStatusCodes';
-import { changePortAndAddress, getDetails } from './settingsRouter';
+import { changePortAndAddress, getDetails, restartClient } from './settingsRouter';
 
 
 // **** Variables **** //
@@ -28,7 +28,13 @@ settingsRouter.post('/', (req: IReq, res: IRes) => {
 settingsRouter.get('/', (req: IReq, res: IRes) => {
   const details = getDetails();
   return res.status(HttpStatusCodes.OK).json(details);
-})
+});
+
+settingsRouter.post(Paths.Settings.Restart, (_: IReq, res: IRes) => {
+  restartClient();
+
+  return res.status(HttpStatusCodes.OK).json('Servidor reiniciado');
+});
 
 apiRouter.use(Paths.Settings.Base, settingsRouter);
 
