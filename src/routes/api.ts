@@ -6,34 +6,73 @@ import { IRes } from './types/express/misc';
 import HttpStatusCodes from '@src/constants/HttpStatusCodes';
 import { changePortAndAddress, getDetails, restartClient } from './settingsRouter';
 
-
 // **** Variables **** //
 
 const apiRouter = Router();
 const settingsRouter = Router();
 
-// Add UserRouter
+// Add BaseRouter
 apiRouter.get('/', (req: IReq, res: IRes) => {
-  res.send( '<h1>Soft-GroupRD-F1UDP</h1>' );
+  try {
+    res.send( '<h1>Soft-GroupRD-F1UDP</h1>' );
+  } catch (error) {
+    if (error instanceof Error) {      
+      res.status(HttpStatusCodes.INTERNAL_SERVER_ERROR).json({
+        error: 'Internal Server Error',
+        message: error.message,
+      });
+    }
+  }
 });
 
+// Add settingsRouter
 settingsRouter.post('/', (req: IReq, res: IRes) => {
-  const port: number = parseInt(req.query.port as string) || 20777;
-  const address: string = req.query.address as string || '192.168.1.81';
+  const port: number =
+    parseInt(req.query.port as string) || 20777;
+  const address: string =
+    req.query.address as string || '192.168.1.81';
 
-  changePortAndAddress(port, address);
-  return res.status(HttpStatusCodes.OK).json('Servidor iniciado en el puerto ' + port);
+  try {
+    changePortAndAddress(port, address);
+    res.status(HttpStatusCodes.OK).json(
+      'Servidor iniciado en el puerto ' + port,
+    );
+  } catch (error) {
+    if (error instanceof Error) {   
+      res.status(HttpStatusCodes.INTERNAL_SERVER_ERROR).json({
+        error: 'Internal Server Error',
+        message: error.message,
+      });
+    }
+  }
 });
 
 settingsRouter.get('/', (req: IReq, res: IRes) => {
-  const details = getDetails();
-  return res.status(HttpStatusCodes.OK).json(details);
+  try {
+    const details = getDetails();
+    res.status(HttpStatusCodes.OK).json(details);
+  } catch (error) {
+    if (error instanceof Error) {
+      res.status(HttpStatusCodes.INTERNAL_SERVER_ERROR).json({
+        error: 'Internal Server Error',
+        message: error.message,
+      });
+    }
+  }
 });
 
 settingsRouter.post(Paths.Settings.Restart, (_: IReq, res: IRes) => {
-  restartClient();
-
-  return res.status(HttpStatusCodes.OK).json('Servidor reiniciado');
+  try {
+    restartClient();
+    res.status(HttpStatusCodes.OK).json('Servidor reiniciado');
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      res.status(HttpStatusCodes.INTERNAL_SERVER_ERROR).json({
+        error: 'Internal Server Error',
+        message: error.message,
+      });
+    }
+  }
 });
 
 apiRouter.use(Paths.Settings.Base, settingsRouter);
