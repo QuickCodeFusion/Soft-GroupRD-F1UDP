@@ -58,6 +58,7 @@ export const restartClient = () => {
     f123Client = null;
     startClient();
     appendListeners();
+    return 'Client restarted';
   }
   throw new Error ('Client not started');
 };
