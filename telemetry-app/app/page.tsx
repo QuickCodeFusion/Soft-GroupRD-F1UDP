@@ -13,6 +13,8 @@ interface Driver {
   name: string
   platform: number
   position: number
+  gridPosition: number
+  time: number
 }
 
 const RaceDriversTable: React.FC = () => {
@@ -53,6 +55,8 @@ const RaceDriversTable: React.FC = () => {
             <th>Car Number</th>
             <th>Nationality</th>
             <th>Position</th>
+            <th>GridP</th>
+            <th>time</th>
           </tr>
         </thead>
         <tbody>
@@ -62,6 +66,8 @@ const RaceDriversTable: React.FC = () => {
               <td>{driver.raceNumber}</td>
               <td>{driver.nationality}</td>
               <td>{driver.position}</td>
+              <td>{driver.gridPosition}</td>
+              <td>{driver.time}</td>
             </tr>
           ))}
         </tbody>
