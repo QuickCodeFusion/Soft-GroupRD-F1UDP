@@ -3,6 +3,7 @@ import { PacketLapData, PacketParticipantsData } from 'f1-23-udp';
 
 interface ParticipantPosition extends NormalizedParticipantData {
     position: number;
+    gridPosition: number;
 }
 
 const relateLapDataToDriver = (
@@ -28,11 +29,11 @@ const relateLapDataToDriver = (
 
   // Associate driver names with lap data
   lapDataPacket?.m_lapData?.forEach((lapData) => {
-    const carPosition = lapData.m_carPosition;
+    const gridPosition = lapData.m_gridPosition;
 
-    if(carPosition < 1 || carPosition > 20) return;
+    if(gridPosition < 1 || gridPosition > 20) return;
     
-    const driver = participantsPacket.m_participants[carPosition - 1];
+    const driver = participantsPacket.m_participants[gridPosition - 1];
 
       const driverName = driversDictionary[driver.m_networkId];
 
@@ -46,7 +47,8 @@ const relateLapDataToDriver = (
           myTeam: driver.m_myTeam,
           raceNumber: driver.m_raceNumber,
           platform: driver.m_platform,
-          position: carPosition,
+          position: lapData.m_carPosition,
+          gridPosition,
           teamId: driver.m_teamId,
           nationality: driver.m_nationalty,
         });
