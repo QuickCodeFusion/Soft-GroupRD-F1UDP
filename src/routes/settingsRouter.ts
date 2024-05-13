@@ -13,8 +13,8 @@ let port: number = 20777,
 
 function appendListeners() {
   if (f123Client !== null) {
-    f123Client.on('lapData', (lapData) => {
-      f123Client?.on('participants', (participants) => {
+    f123Client?.on('participants', (participants) => {
+      f123Client?.on('lapData', (lapData) => {
         const participantsPosition = relateLapDataToDriver(lapData, participants);
         io.emit('participantsPosition', participantsPosition);
       });
